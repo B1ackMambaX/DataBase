@@ -16,6 +16,9 @@ int main() {
     system("cls");
 
     Database DB(stud, group, spec);
+    DB.UpdateStudents();
+    DB.UpdateGroups();
+    DB.UpdateSpec();
     while (true) {
         cout << "Avialable commands:" << endl
              << "1: Print Students Table" << endl
@@ -147,7 +150,7 @@ int main() {
         }
         if (x == '9') {
             system("cls");
-            cout << "Succesfully closed" << endl;
+            cout << "Successfully closed" << endl;
             break;
         }
     }

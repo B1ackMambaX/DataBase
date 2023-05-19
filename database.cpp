@@ -289,11 +289,9 @@ Database::GroupsTable Database::findGroup(std::string groupname) {
         if (row[1] == groupname) {
             return GroupsTable(stoi(row[0]), row[1], stoi(row[2]));
         }
-        else {
-            std::string str = "null";
-            return GroupsTable(-1, str, -1);
-        }
     }
+    std::string str = "null";
+    return GroupsTable(-1, str, -1);
 }
 
 Database::SpecTable Database::findSpec(std::string specname) {
@@ -314,12 +312,8 @@ Database::SpecTable Database::findSpec(std::string specname) {
         if (row[1] == specname) {
             return SpecTable(stoi(row[0]), row[1], row[2]);
         }
-        else {
-            return SpecTable(-1, "null", "null");
-        }
-
     }
-
+    return SpecTable(-1, "null", "null");
 }
 
 Database::SpecTable::SpecTable(int id, std::string specName, std::string itemList) {
