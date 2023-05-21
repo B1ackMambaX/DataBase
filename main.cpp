@@ -1,4 +1,4 @@
-#include "iostream"
+﻿#include "iostream"
 #include "database.h"
 #include "stdio.h"
 using namespace std;
@@ -21,16 +21,16 @@ int main() {
     DB.UpdateSpec();
     while (true) {
         cout << "Avialable commands:" << endl
-             << "1: Print Students Table" << endl
-             << "2: Print Groups Table" << endl
-             << "3: Print Specs Table " << endl
-             << "4: Add Student" << endl
-             << "5: Add Group" << endl
-             << "6: Add Spec" << endl
-             << "7: Find Student" << endl
-             << "8: Change Student" << endl
-             << "9: Close app" << endl
-             << "------------------------" << endl << endl;
+            << "1: Print Students Table" << endl
+            << "2: Print Groups Table" << endl
+            << "3: Print Specs Table " << endl
+            << "4: Add Student" << endl
+            << "5: Add Group" << endl
+            << "6: Add Spec" << endl
+            << "7: Find Student" << endl
+            << "8: Change Student" << endl
+            << "9: Close app" << endl
+            << "------------------------" << endl << endl;
         char x = getchar();
         if (x == '1') {
             system("cls");
@@ -122,19 +122,19 @@ int main() {
             string name, lastname, surname, dateOfBirth, groupName;
             cout << "Enter first name:";
             cin >> name;
-            if (name == "-") name == "default";
+            if (name == "-") name = "default";
             cout << "Enter last name:";
             cin >> lastname;
-            if (lastname == "-") lastname == "default";
+            if (lastname == "-") lastname = "default";
             cout << "Enter surname:";
             cin >> surname;
-            if (surname == "-") surname == "default";
+            if (surname == "-") surname = "default";
             cout << "Date of birth:";
             cin >> dateOfBirth;
-            if (dateOfBirth == " ") dateOfBirth == "default";
+            if (dateOfBirth == " ") dateOfBirth = "default";
             cout << "Enter group name:";
             cin >> group;
-            if (groupName == "-") groupName == "default";
+            if (groupName == "-") groupName = "default";
             Database::StudentsTable searchTarget = Database::StudentsTable(0, name, lastname, surname, dateOfBirth, DB.findGroup(group).id);
             list <Database::StudentsTable> searchRes = DB.findStudent(searchTarget);
             if (searchRes.size() == 0) {

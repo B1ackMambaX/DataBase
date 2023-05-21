@@ -2,16 +2,16 @@
 #include "database.h"
 #include <vector>
 #include <algorithm>
-void split(std::string* arr, std::string data){
+void split(std::string* arr, std::string data) {
     int j = 0;
     std::string buff;
-    for(int i = 0; i < data.size(); i++){
-        if(data[i] == '\t'){
+    for (int i = 0; i < data.size(); i++) {
+        if (data[i] == '\t') {
             arr[j] = buff;
             j++;
             buff = "";
         }
-        else{
+        else {
             buff += data[i];
         }
     }
@@ -62,41 +62,41 @@ void Database::AddSpec(std::string specName, std::string itemList) {
 }
 
 /*void Groups::update() {
-	std::remove((filename + ".old").c_str());
-	std::rename(filename.c_str(), (filename + ".old").c_str());
-	std::string temp;
-	std::ifstream filein(filename + ".old");
-	std::ofstream fileout(filename);
-	while (std::getline(filein, temp)) {
-		int pos = 0;
-		for (int i = 0; i < temp.size(); i++) {
-			i++;
-			pos++;
-		}
-		int Id = stoi(temp.substr(0, pos));
-		int flag = -1;
-		for (int i = 0; i < buff.size(); i++) {
-			if (Id == buff[i].id) {
-				flag = i;
+    std::remove((filename + ".old").c_str());
+    std::rename(filename.c_str(), (filename + ".old").c_str());
+    std::string temp;
+    std::ifstream filein(filename + ".old");
+    std::ofstream fileout(filename);
+    while (std::getline(filein, temp)) {
+        int pos = 0;
+        for (int i = 0; i < temp.size(); i++) {
+            i++;
+            pos++;
+        }
+        int Id = stoi(temp.substr(0, pos));
+        int flag = -1;
+        for (int i = 0; i < buff.size(); i++) {
+            if (Id == buff[i].id) {
+                flag = i;
 
-				fileout << buff[flag].id << "\t" << buff[flag].group << "\t" << buff[flag].name << "\t" << buff[flag].info << "\t" << "\n";
+                fileout << buff[flag].id << "\t" << buff[flag].group << "\t" << buff[flag].name << "\t" << buff[flag].info << "\t" << "\n";
 
-				buff[i].id = -1;
-				break;
-			}
-		}
-		if (flag == -1) {
-			fileout << temp << "\n";
-		}
+                buff[i].id = -1;
+                break;
+            }
+        }
+        if (flag == -1) {
+            fileout << temp << "\n";
+        }
 
-	}
-	for (auto r : buff) {
-		if (r.id != -1)
-			fileout << r.id << "\t" << r.group << "\t" << r.name << "\t" << r.info << "\n";
-	}
-	buff.resize(0);
-	filein.close();
-	fileout.close();
+    }
+    for (auto r : buff) {
+        if (r.id != -1)
+            fileout << r.id << "\t" << r.group << "\t" << r.name << "\t" << r.info << "\n";
+    }
+    buff.resize(0);
+    filein.close();
+    fileout.close();
 }*/
 
 void Database::UpdateSpec() {
@@ -105,7 +105,7 @@ void Database::UpdateSpec() {
     std::string temp;
     std::ifstream filein(specPath + ".old");
     std::ofstream fileout(specPath);
-    fileout << IDSpec<< std::endl;
+    fileout << IDSpec << std::endl;
     bool IsData = false;
     while (std::getline(filein, temp)) {
         if (!IsData) {
@@ -144,7 +144,7 @@ void Database::UpdateStudents() {
     std::string temp;
     std::ifstream filein(studPath + ".old");
     std::ofstream fileout(studPath);
-    fileout << IDStudents<< std::endl;
+    fileout << IDStudents << std::endl;
     bool IsData = false;
     while (std::getline(filein, temp)) {
         if (!IsData) {
@@ -180,7 +180,7 @@ void Database::UpdateGroups() {
     std::string temp;
     std::ifstream filein(groupPath + ".old");
     std::ofstream fileout(groupPath);
-    fileout << IDGroups<< std::endl;
+    fileout << IDGroups << std::endl;
     bool IsData = false;
     while (std::getline(filein, temp)) {
         if (!IsData) {
@@ -246,7 +246,7 @@ void Database::LoadSpec() {
 }
 */
 
-std::list<Database::StudentsTable> Database::findStudent(Database:: StudentsTable searchTarget) {
+std::list<Database::StudentsTable> Database::findStudent(Database::StudentsTable searchTarget) {
     if (StudentsDataHolder.size() != 0) {
         UpdateStudents();
     }
@@ -266,7 +266,7 @@ std::list<Database::StudentsTable> Database::findStudent(Database:: StudentsTabl
             && (row[3] == searchTarget.surname || searchTarget.surname == "default")
             && (row[4] == searchTarget.dateOfBirth || searchTarget.dateOfBirth == "default")
             && (stoi(row[5]) == searchTarget.id_group || searchTarget.id_group == -1)
-                ) searchResults.push_back(StudentsTable(stoi(row[0]), row[1], row[2], row[3], row[4], stoi(row[5])));
+            ) searchResults.push_back(StudentsTable(stoi(row[0]), row[1], row[2], row[3], row[4], stoi(row[5])));
 
     }
     return searchResults;
@@ -334,7 +334,7 @@ Database::StudentsTable::StudentsTable(int id, std::string firstname, std::strin
     this->lastname = lastname;
     this->firstname = firstname;
     this->surname = surname;
-    this->dateOfBirth =dateOfBirth;
+    this->dateOfBirth = dateOfBirth;
 }
 
 void Database::changeStudent(Database::StudentsTable searchTarget, Database::StudentsTable newinfo) {
@@ -343,7 +343,7 @@ void Database::changeStudent(Database::StudentsTable searchTarget, Database::Stu
         std::cout << "Found more than 1 record\n";
         return;
     }
-    if (found.size()==0) {
+    if (found.size() == 0) {
         std::cout << "Not found\n";
         return;
     }
@@ -438,5 +438,125 @@ void Database::printSpecs() {
     filein.close();
 }
 
+bool Database::deleteStudent(StudentsTable searchTarget) {
+    bool answer = 0;
+    std::remove((studPath + ".old").c_str());
+    std::rename(studPath.c_str(), (studPath + ".old").c_str());
+    std::string temp;
+    std::ifstream filein(studPath + ".old");
+    std::ofstream fileout(studPath);
+    fileout << IDStudents << std::endl;
+    bool IsData = false;
+    while (std::getline(filein, temp)) {
+        if (!IsData) {
+            IsData = true;
+            continue;
+        }
+        std::string row[6];
+        split(row, temp);
+        if ((row[1] == searchTarget.firstname)
+            && (row[2] == searchTarget.lastname)
+            && (row[3] == searchTarget.surname)
+            && (row[4] == searchTarget.dateOfBirth)
+            && (stoi(row[5]) == searchTarget.id_group)
+            ) {
+            answer = 1;
+            continue;
+        }
+        fileout << temp << "\n";
+    }
+    auto it = StudentsDataHolder.begin();
+    while (it != StudentsDataHolder.end()) {
+        if ((it->firstname == searchTarget.firstname)
+            && (it->lastname == searchTarget.lastname)
+            && (it->surname == searchTarget.surname)
+            && (it->dateOfBirth == searchTarget.dateOfBirth)
+            && (it->id_group == searchTarget.id_group)) {
+            StudentsDataHolder.erase(it++);
+            answer = 1;
+            break;
+        }
+        else {
+            ++it;
+        }
+    }
+    filein.close();
+    fileout.close();
+    return answer;
+}
 
+bool Database::deleteGroup(std::string groupname) {
+    bool answer = 0;
+    std::remove((groupPath + ".old").c_str());
+    std::rename(groupPath.c_str(), (groupPath + ".old").c_str());
+    std::string temp;
+    std::ifstream filein(groupPath + ".old");
+    std::ofstream fileout(groupPath);
+    fileout << IDGroups << std::endl;
+    bool IsData = false;
+    while (std::getline(filein, temp)) {
+        if (!IsData) {
+            IsData = true;
+            continue;
+        }
+        std::string row[3];
+        split(row, temp);
+        if (row[1] == groupname) {
+            answer = 1;
+            continue;
+        }
+        fileout << temp << "\n";
+    }
+    auto it = GroupsDataHolder.begin();
+    while (it != GroupsDataHolder.end()) {
+        if (it->groupName == groupname) {
+            GroupsDataHolder.erase(it++);
+            answer = 1;
+            break;
+        }
+        else {
+            ++it;
+        }
+    }
+    filein.close();
+    fileout.close();
+    return answer;
+}
 
+bool Database::deleteSpec(std::string specname) {
+    bool answer = 0;
+    std::remove((specPath + ".old").c_str());
+    std::rename(specPath.c_str(), (specPath + ".old").c_str());
+    std::string temp;
+    std::ifstream filein(specPath + ".old");
+    std::ofstream fileout(specPath);
+    fileout << IDSpec << std::endl;
+    bool IsData = false;
+    while (std::getline(filein, temp)) {
+        if (!IsData) {
+            IsData = true;
+            continue;
+        }
+        std::string row[3];
+        split(row, temp);
+        if (row[1] == specname) {
+            answer = 1;
+            continue;
+        }
+        fileout << temp << "\n";
+    }
+    auto it = SpecDataHolder.begin();
+    while (it != SpecDataHolder.end()) {
+        if (it->SpecName == specname) {
+            SpecDataHolder.erase(it++);
+            answer = 1;
+            break;
+        }
+        else {
+            ++it;
+        }
+    }
+    filein.close();
+    fileout.close();
+    return answer;
+}

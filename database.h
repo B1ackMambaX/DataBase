@@ -34,7 +34,7 @@ public:
         std::string dateOfBirth;
         int id_group;
         StudentsTable(int id, std::string firstname, std::string lastname, std::string surname,
-                      std::string dateOfBirth, int id_group);
+            std::string dateOfBirth, int id_group);
         StudentsTable() {};
         bool operator<(const StudentsTable& T) const {
             return id < T.id;
@@ -86,6 +86,11 @@ public:
     void printStudents();
     void printGroups();
     void printSpecs();
+    //Удаление записей
+    bool deleteStudent(StudentsTable searchTarget); // true - удалено, false - нет
+    bool deleteGroup(std::string groupname); // true - удалено, false - нет
+    bool deleteSpec(std::string specname); // true - удалено, false - нет
+
 };
 
 void split(std::string* arr, std::string data); // rework
