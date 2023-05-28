@@ -5,7 +5,7 @@
 #include <set>
 #include <fstream>
 
-class Database {
+class database {
 public:
     //Структуры для строк различных таблиц
     struct StudentsTable;
@@ -34,7 +34,7 @@ public:
         std::string dateOfBirth;
         int id_group;
         StudentsTable(int id, std::string firstname, std::string lastname, std::string surname,
-            std::string dateOfBirth, int id_group);
+                      std::string dateOfBirth, int id_group);
         StudentsTable() {};
         bool operator<(const StudentsTable& T) const {
             return id < T.id;
@@ -60,11 +60,7 @@ public:
         }
         SpecTable() {};
     };
-    Database(std::string firstPath, std::string secondPath, std::string thirdPath);
-    //Методы для выгрузки таблиц из файлов
-    //void LoadStudents();// deprecated, rework
-    //void LoadGroups();// deprecated, rework
-    //void LoadSpec();// deprecated, rework
+    database(std::string firstPath, std::string secondPath, std::string thirdPath);
 
     //Методы для обновления таблиц(выгружаем из ОП и записываем в файл)
     void UpdateStudents();// Need update (done)
@@ -78,6 +74,7 @@ public:
     std::list<StudentsTable> findStudent(StudentsTable searchTarget); // fixed
     GroupsTable findGroup(std::string groupname); // fixed
     SpecTable findSpec(std::string specname); // fixed
+    SpecTable findSpecById(int id);
 
     //Изменение записей
     void changeStudent(StudentsTable searchTarget, StudentsTable newinfo);
@@ -90,6 +87,8 @@ public:
     bool deleteStudent(StudentsTable searchTarget); // true - удалено, false - нет
     bool deleteGroup(std::string groupname); // true - удалено, false - нет
     bool deleteSpec(std::string specname); // true - удалено, false - нет
+    //Составление ведомостей
+    void createExamList(std::string name, std::string lastname, std::string surname, std::string DoB, std::string group);
 
 };
 
