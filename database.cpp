@@ -17,9 +17,9 @@ void split(std::string* arr, std::string data) {
 }
 
 database::database(std::string firstPath, std::string secondPath, std::string thirdPath) {
-    this->studPath = "Tables\\" + firstPath;
-    this->groupPath = "Tables\\" + secondPath;
-    this->specPath = "Tables\\" + thirdPath;
+    this->studPath = "../Tables/" + firstPath;
+    this->groupPath = "../Tables/" + secondPath;
+    this->specPath = "../Tables/" + thirdPath;
     if (firstPath != "") {
         std::fstream file(studPath);
         std::string temp;

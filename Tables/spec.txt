@@ -1,0 +1,6 @@
+5
+0	KN	Matan:exam Algem:exam	
+1	KB	Matan:exam Algem:exam	
+2	MOIS	Osi:exam Algem:exam	
+3	FIZ	Matan:exam Osi:exam	
+4	AnotherGrpoup	Matan:exam Algem:exam	
