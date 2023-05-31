@@ -88,7 +88,7 @@ public:
     bool deleteGroup(std::string groupname); // true - удалено, false - нет
     bool deleteSpec(std::string specname); // true - удалено, false - нет
     //Составление ведомостей
-    void createExamList(std::string name, std::string lastname, std::string surname, std::string DoB, std::string group);
+    void createExamList(std::string group);
 
 };
 

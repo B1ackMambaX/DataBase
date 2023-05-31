@@ -1,5 +1,5 @@
 #include "iostream"
-#include "Database.h"
+#include "database.h"
 using namespace std;
 
 
@@ -18,7 +18,7 @@ int main() {
     cin >> spec;
     system("cls");
 
-    Database DB(stud, group, spec);
+    database DB(stud, group, spec);
     DB.UpdateStudents();
     DB.UpdateGroups();
     DB.UpdateSpec();
@@ -75,7 +75,7 @@ int main() {
             cin >> dateOfBirth;
             cout << "Enter group name:";
             cin >> group;
-            if ((DB.findStudent(Database::StudentsTable(0, name, lastName, surname, dateOfBirth, DB.findGroup(group).id))).size() != 0) {
+            if ((DB.findStudent(database::StudentsTable(0, name, lastName, surname, dateOfBirth, DB.findGroup(group).id))).size() != 0) {
                 system("cls");
                 cout << "This student is already existing" << endl << endl;
             }
@@ -153,8 +153,8 @@ int main() {
             cout << "Enter group name:";
             cin >> group;
             if (groupName == "-") groupName = "default";
-            Database::StudentsTable searchTarget = Database::StudentsTable(0, name, lastname, surname, dateOfBirth, DB.findGroup(group).id);
-            list <Database::StudentsTable> searchRes = DB.findStudent(searchTarget);
+            database::StudentsTable searchTarget = database::StudentsTable(0, name, lastname, surname, dateOfBirth, DB.findGroup(group).id);
+            list <database::StudentsTable> searchRes = DB.findStudent(searchTarget);
             if (searchRes.size() == 0) {
                 system("clear");
                 cout << "No such Student" << endl << endl;
@@ -202,8 +202,8 @@ int main() {
             cin >> newGroup;
             if (newGroup == "-") newGroup = group;
 
-            Database::StudentsTable searchTarget(-1, name, lastname, surname, dateOfBirth, DB.findGroup(group).id);
-            Database::StudentsTable NewInfo(-1, newName, newLastname, newSurname, newDoB, DB.findGroup(newGroup).id);
+            database::StudentsTable searchTarget(-1, name, lastname, surname, dateOfBirth, DB.findGroup(group).id);
+            database::StudentsTable NewInfo(-1, newName, newLastname, newSurname, newDoB, DB.findGroup(newGroup).id);
             system("cls");
             DB.changeStudent(searchTarget, NewInfo);
             DB.UpdateStudents();
@@ -227,7 +227,7 @@ int main() {
             cin >> dateOfBirth;
             cout << "Enter group name:";
             cin >> groupName;
-            Database::StudentsTable searchTarget(-1, name, lastname, surname, dateOfBirth, DB.findGroup(groupName).id);
+            database::StudentsTable searchTarget(-1, name, lastname, surname, dateOfBirth, DB.findGroup(groupName).id);
             system("cls");
             if(DB.deleteStudent(searchTarget)) {
                 DB.UpdateStudents();
@@ -272,20 +272,10 @@ int main() {
         if(x == 12) {
             system("cls");
             cout << "You're creating an exam list" << endl;
-            cout << "Enter params of student" << endl;
-            string name, lastname, surname, dateOfBirth, groupName;
-
-            cout << "Enter first name:";
-            cin >> name;
-            cout << "Enter last name:";
-            cin >> lastname;
-            cout << "Enter surname:";
-            cin >> surname;
-            cout << "Date of birth:";
-            cin >> dateOfBirth;
             cout << "Enter group name:";
+            string groupName;
             cin >> groupName;
-            DB.createExamList(name,lastname,surname,dateOfBirth,groupName);
+            DB.createExamList(groupName);
             system("cls");
             cout << "Exam list created" << endl;
             continue;

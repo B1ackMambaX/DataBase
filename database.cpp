@@ -529,14 +529,16 @@ bool database::deleteSpec(std::string specname) {
     return answer;
 }
 
-void database::createExamList(std::string name, std::string lastname, std::string surname, std::string DoB, std::string group) {
-    StudentsTable searchTarget(-1, name, lastname, surname, DoB, findGroup(group).id);
+void database::createExamList(std::string group) {
+    StudentsTable searchTarget(-1, "default", "default", "default", "default", findGroup(group).id);
     std::list<StudentsTable> found =  findStudent(searchTarget);
-    if(found.size() != 1) {
-        std::cout << "There are more than one or no students, check params" << std::endl;
+    if(found.size() == 0) {
+        std::cout << "There are no such group try again" << std::endl;
         return;
     }
-    std::ofstream fileout(found.back().firstname);
-    fileout << found.back().firstname << '\t' << found.back().lastname << '\t' << found.back().surname << '\t' << found.back().dateOfBirth << '\t' << findGroup(group).groupName <<'\t' << findSpecById(
-            findGroup(group).spec_id).SpecName << '\t' <<  findSpecById(findGroup(group).spec_id).itemList;
+    std::ofstream fileout(group);
+    fileout << "Group: "<< group << "; \n" << "Spec: " << findSpecById(findGroup(group).spec_id).SpecName << "; \n"  << "Items list: " << findSpecById(findGroup(group).spec_id).itemList << std::endl << "---------------------------------------------------" << std::endl;
+    for (StudentsTable j : found) {
+        fileout << j.firstname << " " << j.lastname << " " << j.surname << " " << j.dateOfBirth << std::endl;
+    }
 }
